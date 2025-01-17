@@ -1,16 +1,17 @@
 import jwt from 'jsonwebtoken';
 import redisClient from '../config/redis.js';
-import routeInfo from '../config/routeInfo.js';
 
 const authenticate = async (req, res, next) => {
-  console.log(req);
-  const anyAllowed = routeInfo[req.path]?.['permissions'].includes('ANY');
+  const routeDetails = req.gateway_route_details;
+  console.log("hello from authenticate", routeDetails);
 
-  if(!routeInfo[req.path]) {
+  if(!routeDetails) {
     return res.status(404).json({
-      error: "no such route"
+      error: "no such route",
     });
   }
+
+  const anyAllowed = routeDetails['permissions'].includes('ANY');
 
   if(anyAllowed) {
     next();

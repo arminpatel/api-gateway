@@ -1,7 +1,7 @@
-import routeInfo from '../config/routeInfo.js';
-
 const authorize = (req, res, next) => {
-  const allowedRoles = routeInfo[req.path]?.permissions;
+  console.log("heelo from authorize");
+  const routeDetails = req.gateway_route_details;
+  const allowedRoles = routeDetails.permissions;
 
   if(allowedRoles.includes('ANY') || allowedRoles.include('AUTHENTICATED')) {
     next();

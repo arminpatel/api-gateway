@@ -3,7 +3,7 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import redisClient from '../config/redis.js';
 
-const AUTH_SERVICE_URL = "http://localhost:3001/api/login";
+const AUTH_SERVICE_URL = `${process.env.USER_SERVICE_URL}/api/login`;
 const SESSION_EXPIRY_SECONDS = 3600;
 
 const router = express.Router();
@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
 
     const user = authResponse.data;
     const sessionData = {
-      user: user,
+      user: user.data,
       createdAt: new Date().toISOString()
     }
 

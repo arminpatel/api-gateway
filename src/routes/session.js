@@ -19,6 +19,12 @@ router.put('/', async (req, res) => {
   console.log(token);
 
   try {
+    const sessionInDB = await redisClient.get(`session:${token}`);
+    if(!sessionInDB) {
+      return res.status(401).json({
+        message: "unauthorized"
+      });
+    }
     await redisClient.set(`session:${token}`, JSON.stringify(session), {
       KEEPTTL: true
     });

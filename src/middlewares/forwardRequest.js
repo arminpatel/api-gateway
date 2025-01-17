@@ -2,7 +2,10 @@ import axios from 'axios';
 import routeInfo from '../config/routeInfo.js';
 
 const forwardRequest = async (req, res) => {
-  const serviceAddress = routeInfo[req.path]['serviceAddress'];
+  console.log("hello from forwardRequest");
+  const routeDetails = req.gateway_route_details;
+  const serviceAddress = routeDetails['serviceAddress'];
+  console.log(serviceAddress, req.path);
   try {
     const response = await axios({
       method: req.method,
@@ -10,9 +13,10 @@ const forwardRequest = async (req, res) => {
       headers: req.headers,
       data: req.body,
     });
-    res.status(response.status).json(response.data);
+    console.log("hello");
+    return res.status(response.status).json(response.data);
   } catch(error) {
-    res.statu(error.response?.status || 500).json(err.response?.data || { error: 'Internal Server Error'});
+    return res.status(error.response?.status || 500).json(error.response?.data || { error: 'Internal Server Error'});
   }
 };
 
