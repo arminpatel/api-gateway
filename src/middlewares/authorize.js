@@ -1,9 +1,8 @@
 const authorize = (req, res, next) => {
-  console.log("heelo from authorize");
   const routeDetails = req.gateway_route_details;
   const allowedRoles = routeDetails.permissions;
 
-  if(allowedRoles.includes('ANY') || allowedRoles.include('AUTHENTICATED')) {
+  if(allowedRoles.includes('ANY') || allowedRoles.includes('AUTHENTICATED')) {
     next();
     return;
   }

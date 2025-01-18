@@ -3,7 +3,6 @@ import redisClient from '../config/redis.js';
 
 const authenticate = async (req, res, next) => {
   const routeDetails = req.gateway_route_details;
-  console.log("hello from authenticate", routeDetails);
 
   if(!routeDetails) {
     return res.status(404).json({
@@ -28,7 +27,7 @@ const authenticate = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const session = await redisClient.get(`session:${decoded.user.id}`);
+    const session = await redisClient.get(`session:${token}`);
     if(!session) {
       return res.status(401).json({
         error: "Session expired or invalid"
@@ -38,6 +37,7 @@ const authenticate = async (req, res, next) => {
     req.user = JSON.parse(session);
     next();
   } catch(error) {
+    console.log(error);
     res.status(403).json({
       error: "Invalid or expired token"
     })

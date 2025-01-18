@@ -26,8 +26,6 @@ router.post('/login', async (req, res) => {
       userRole
     });
 
-    console.log(authResponse);
-
     if(authResponse.status !== 200) {
       return res.status(authResponse.status).json(authResponse.data);
     }
@@ -38,7 +36,8 @@ router.post('/login', async (req, res) => {
       createdAt: new Date().toISOString()
     }
 
-    const token = jwt.sign({userEmail}, process.env.JWT_SECRET, {expiresIn: SESSION_EXPIRY_SECONDS * 1000}) // time in ms
+    console.log(process.env.JWT_SECRET);
+    const token = jwt.sign({userEmail}, process.env.JWT_SECRET, {expiresIn: SESSION_EXPIRY_SECONDS * 1000}); // time in ms
 
     await redisClient.set(`session:${token}`, JSON.stringify(sessionData), {
       EX: SESSION_EXPIRY_SECONDS
