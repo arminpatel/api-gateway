@@ -3,7 +3,11 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import redisClient from '../config/redis.js';
 
-const AUTH_SERVICE_URL = `${process.env.USER_SERVICE_URL}/api/login`;
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const AUTH_SERVICE_URL = `${process.env.USER_SERVICE_URL}/api/user/login`;
 const SESSION_EXPIRY_SECONDS = 3600;
 
 const router = express.Router();
@@ -23,14 +27,16 @@ router.post('/login', async (req, res) => {
     const authResponse = await axios.post(AUTH_SERVICE_URL, {
       userEmail,
       password,
-      userRole
+      role: userRole
     });
 
     if(authResponse.status !== 200) {
+      console.log(authResponse.data)
       return res.status(authResponse.status).json(authResponse.data);
     }
 
     const user = authResponse.data;
+    console.log(user);
     const sessionData = {
       user: user,
       createdAt: new Date().toISOString()
@@ -48,7 +54,8 @@ router.post('/login', async (req, res) => {
       user: sessionData.user
     });
   } catch(error) {
-    console.error("Login error: ", error.message);
+    console.log(AUTH_SERVICE_URL, process.env.USER_SERVICE_URL);
+    console.error("Login error: ", error.message, error.response?.data);
     res.status(500).json({
       error: "Login failed"
     })

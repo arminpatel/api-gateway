@@ -27,7 +27,9 @@ const authenticate = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
     const session = await redisClient.get(`session:${token}`);
+    console.log(token);
     if(!session) {
       return res.status(401).json({
         error: "Session expired or invalid"
@@ -37,7 +39,7 @@ const authenticate = async (req, res, next) => {
     req.user = JSON.parse(session);
     next();
   } catch(error) {
-    console.log(error);
+    console.log("hello",error);
     res.status(403).json({
       error: "Invalid or expired token"
     })

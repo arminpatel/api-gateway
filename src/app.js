@@ -31,19 +31,24 @@ app.put('/api/user/restaurant-manager/:userEmail/link-restaurant', (req, res) =>
 
 app.use('/api', loginRouter);
 
+app.use((req, res, next) => {
+  console.log("got request for ", req.path, "with", req.method);
+  next();
+});
+
 for(let ind in routeInfo) {
   const route = routeInfo[ind];
   if(route.isLocal) {
     app.use(route.path, route.router);
-  } else if(route.method == 'GET') {
+  } else if(route.method === 'GET') {
     app.get(route.path, injectRouteDetails(route));
-  } else if(route.method == 'POST') {
+  } else if(route.method ==='POST') {
     app.post(route.path, injectRouteDetails(route));
-  } else if(route.method == 'PUT') {
+  } else if(route.method === 'PUT') {
     app.put(route.path, injectRouteDetails(route));
-  } else if(route.method == 'PATCH') {
+  } else if(route.method === 'PATCH') {
     app.patch(route.path, injectRouteDetails(route));
-  } else if(route.method == 'DELETE') {
+  } else if(route.method === 'DELETE') {
     app.delete(route.path, injectRouteDetails(route));
   }
 }

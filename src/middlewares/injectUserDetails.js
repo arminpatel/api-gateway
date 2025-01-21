@@ -1,5 +1,5 @@
 const injectUserDetails = (req, res, next) => {
-  req.body.user = req.user;
+  req.body.auth_user = req.user?.user;
   next();
 };
 
