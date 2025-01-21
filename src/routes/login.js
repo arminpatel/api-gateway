@@ -32,12 +32,12 @@ router.post('/login', async (req, res) => {
 
     const user = authResponse.data;
     const sessionData = {
-      user: user.data,
+      user: user,
       createdAt: new Date().toISOString()
     }
 
-    console.log(process.env.JWT_SECRET);
-    const token = jwt.sign({userEmail}, process.env.JWT_SECRET, {expiresIn: SESSION_EXPIRY_SECONDS * 1000}); // time in ms
+    console.log(user);
+    const token = jwt.sign(user, process.env.JWT_SECRET, {expiresIn: SESSION_EXPIRY_SECONDS * 1000}); // time in ms
 
     await redisClient.set(`session:${token}`, JSON.stringify(sessionData), {
       EX: SESSION_EXPIRY_SECONDS

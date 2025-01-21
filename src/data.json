@@ -1,7 +1,5 @@
 {
-  "session": {
-    "userEmail": "someeamil@example.com",
-    "password": "supersecret",
-    "userRole": "ADMIN"
-  }
+  "userEmail": "someeamil@example.com",
+  "password": "supersecret",
+  "userRole": "ADMIN"
 }

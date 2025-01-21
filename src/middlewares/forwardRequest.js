@@ -11,12 +11,19 @@ const forwardRequest = async (req, res) => {
   console.log("hello", req.path);
   const serviceAddress = routeDetails['serviceAddress'];
   try {
+    const headers = {
+      ...req.headers,
+      'Content-Type': req.headers['content-type'] || 'application/json',
+    };
+
+    console.log(req.body);
+
     const response = await axios({
       method: req.method,
       url: `${serviceAddress}${req.path}`,
-      headers: req.headers,
-      data: req.body,
-    });
+      body: req.body,
+    });    
+
     console.log(response.data);
     return res.status(response.status).json(response.data);
   } catch(error) {

@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser'
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -15,6 +16,18 @@ import routeInfo from './config/routeInfo.js';
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
+
+app.put('/api/user/restaurant-manager/:userEmail/link-restaurant', (req, res) => {
+  const {userEmail} = req.params;
+  const restaurantId = req.body.restaurantId;
+
+  console.log(userEmail, restaurantId, req.body);
+
+  return res.status(200).json({
+    "hello": "world"
+  })
+})
 
 app.use('/api', loginRouter);
 

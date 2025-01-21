@@ -7,8 +7,6 @@ const ORDER_SERVICE_URL = process.env.ORDER_SERVICE_URL;
 const RESTAURANT_SERVICE_URL = process.env.RESTAURANT_SERVICE_URL;
 const DELIVERY_SERVICE_URL = process.env.DELIVERY_SERVICE_URL;
 
-console.log(USER_SERVICE_URL);
-
 const routeInfo = [
   {
     path: '/api/session',
@@ -25,6 +23,12 @@ const routeInfo = [
   },
   {
     path: '/api/user/changePassword',
+    method: 'PUT',
+    permissions: ['AUTHENTICATED'],
+    serviceAddress: USER_SERVICE_URL
+  },
+  {
+    path: '/api/:role/:noidea',
     method: 'PUT',
     permissions: ['AUTHENTICATED'],
     serviceAddress: USER_SERVICE_URL
