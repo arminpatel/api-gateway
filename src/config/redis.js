@@ -1,5 +1,11 @@
 import { createClient } from 'redis';
-const redisClient = createClient();
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const redisClient = createClient({
+  url: `redis://${process.env.REDIS_ENDPOINT}:6379`
+});
 
 redisClient.connect().then(() => {
   console.log('Connected to redis');
