@@ -135,7 +135,43 @@ const routeInfo = [
     method: 'POST',
     permissions: ['AUTHENTICATED'],
     serviceAddress: RESTAURANT_SERVICE_URL
-  }
+  },
+  {
+    path: '/api/getRiderAvailability',
+    method: 'POST',
+    permissions: ['AUTHENTICATED'],
+    serviceAddress: DELIVERY_SERVICE_URL
+  },
+  {
+    path: '/api/updateRiderCityAvailability',
+    method: 'POST',
+    permissions: ['AUTHENTICATED'],
+    serviceAddress: DELIVERY_SERVICE_URL
+  },
+  {
+    path: '/api/getAllOrdersByRider',
+    method: 'GET',
+    permissions: ['AUTHENTICATED'],
+    serviceAddress: DELIVERY_SERVICE_URL
+  },
+  {
+    path: '/api/acceptDelivery',
+    method: 'POST',
+    permissions: ['AUTHENTICATED'],
+    serviceAddress: DELIVERY_SERVICE_URL
+  },
+  {
+    path: '/api/cancel',
+    method: 'POST',
+    permissions: ['AUTHENTICATED'],
+    serviceAddress: DELIVERY_SERVICE_URL
+  },
+  {
+    path: '/api/updateDeliveryStatus',
+    method: 'POST',
+    permissions: ['AUTHENTICATED'],
+    serviceAddress: DELIVERY_SERVICE_URL
+  },
 ]
 
 export default routeInfo;
